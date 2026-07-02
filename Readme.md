@@ -13,3 +13,6 @@
 
 ## News-Aggregator-Service
 ![HLD](hld/News-Aggregator/News_Aggregator_HLD.svg)
+
+## Whatsapp
+![HLD](hld/WhatsApp/Whatsapp_HLD.svg)
