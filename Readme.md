@@ -19,3 +19,7 @@
 
 ## FB News Feed
 ![HLD](hld/FB_News_Feed/FB_News_Feed_HLD.svg)
+
+
+## Dynamo DB Deep Dive
+![HLD](hld/Deep-Dive/DynamoDb/Dynamo_DB_HLD_04-07-2026.svg)
