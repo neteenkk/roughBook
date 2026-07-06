@@ -5,11 +5,13 @@
 ![HLD](hld/Bitly/Bitly.svg)
 
 ## Dropbox
-
 ![HLD](hld/DropBox/Dropbox_hld.svg)
 
 ## Local-Delivery-Service
 ![HLD](hld/Local-Delivery-Service/Local_Delivery_Service_HLD.svg)
+
+## Yelp
+![HLD](hld/Yelp/Yelp_HLD.svg)
 
 ## News-Aggregator-Service
 ![HLD](hld/News-Aggregator/News_Aggregator_HLD.svg)
