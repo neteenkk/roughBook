@@ -25,6 +25,9 @@
 ## Leetcode HLD
 ![HLD](hld/Leetcode/Leetcode_HLD.svg)
 
+## Instagram HLD
+![HLD](hld/Instagram/Instagram_HLD_07-07-2026.svg)
+
 # Deep Dives
 ## Dynamo DB Deep Dive
 ![HLD](hld/Deep-Dive/DynamoDb/Dynamo_DB_HLD_04-07-2026.svg)
