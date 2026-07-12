@@ -28,6 +28,10 @@
 ## Instagram HLD
 ![HLD](hld/Instagram/Instagram_HLD_07-07-2026.svg)
 
+## Online Auction HLD
+![HLD](hld/Online-Auction/Online_Auction_HLD_12-07-2026.svg)
+
+
 # Deep Dives
 ## Dynamo DB Deep Dive
 ![HLD](hld/Deep-Dive/DynamoDb/Dynamo_DB_HLD_04-07-2026.svg)
