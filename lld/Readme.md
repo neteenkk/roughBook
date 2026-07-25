@@ -353,4 +353,27 @@ if __name__ == "__main__":
 - eg: A student has-a teacher who teaches them.
 
 ## Aggregation
+- It's often described as a "has-a" relationship where the whole does not control the part's lifecycle
+- One class (the "whole") contains references to other class objects (the "parts"), but the parts can exist independently of the whole.
+- The hollow diamond (o--) on the Playlist side is the UML notation for aggregation. It signals that Playlist is the "whole" and Song is the "part," but the songs are not owned by the playlist.
+- eg: Playlist has-a Song
+- Uses:
+    - Promotes Reusability
+    - Improves Flexibility
+    - Reflects real world relationships
+
+## Composition
+- It represents the strongest form of "has-a" relationship, where the whole owns the parts and controls their lifecycle.
+- composition is represented by a filled diamond (◆) at the “whole” end of the relationship
+- when to use compisition:
+    - is the part meaningless without the whole
+    - should the whole control the parts's lifecycle
+- avoids tight coupling we can swap out parts dynamically to modify behaviour
+
+Think of it like this:
+- Association is a general connection: two classes simply know about each other.
+- Aggregation is a grouping: the whole and parts can exist independently.
+- Composition is an ownership: the part’s existence is bound to the whole.
+
+## Dependency
 - 
