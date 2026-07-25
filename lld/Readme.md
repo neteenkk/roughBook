@@ -376,4 +376,99 @@ Think of it like this:
 - Composition is an ownership: the part’s existence is bound to the whole.
 
 ## Dependency
+- In UML class diagrams, dependency is represented by a dashed arrow (..>)
+- Represents "uses a" relationship
+- A Dependency exists when one class relies on another to fulfill a responsibility, but does so without retaining a permanent reference to it.
+This typically happens when:
+- A class accepts another class as a method parameter.
+- A class instantiates or uses another class inside a method.
+- A class returns an object of another class from a method
+
+```
+class Document:
+    def __init__(self, content: str):
+        self.__content = content
+    
+    def get_content(self) -> str:
+        return self.__content
+
+
+class Printer:
+    def print_document(self, document: Document):
+        print("Printing... "+ document.get_content())
+
+
+if __name__ == "__main__":
+    doc = Document("Hello, World!")
+    printer = Printer()
+    printer.print_document(doc)
+```
+
+- The relationship is scoped to one method call. Once print() returns, the Printer object has no knowledge that a Document was ever involved.
+- The Document is created externally and passed in. The Printer doesn't construct, own, or manage the document's lifecycle.
+
+```
+eg 2: As local Variable
+class OrderProcessor:
+    def process(self, order):
+        formatter = JsonFormatter()
+        json = formatter.format(order)
+        # Send json to external API...
+
+
+eg 3: As Return Types
+class UserFactory:
+    def create_user(self, name, email):
+        return User(name, email)
+
+```
+
+## Realization 
+- The relationship works like this:
+    - An interface defines what must be done (the contract)
+    - A class implements how it's done (the fulfillment)
+    - The implementing class must provide all methods declared in the interface
+    - Multiple classes can realize the same interface differently
+- This notation is intentionally similar to inheritance (which uses a solid line with a hollow triangle) but visually distinct, the dashed line signals "contract fulfillment" rather than "direct descent." - - - -|>
+```
+from abc import ABC, abstractmethod
+
+class Flyable(ABC):
+    @abstractmethod
+    def fly(self):
+        pass
+
+    @abstractmethod
+    def get_flight_info(self):
+        pass
+		
+class Bird(Flyable):
+    def __init__(self, species, wing_span):
+        self.species = species
+        self.wing_span = wing_span
+
+    def fly(self):
+        print(f"{self.species} flaps its wings and takes off.")
+
+    def get_flight_info(self):
+        return f"{self.species} (wingspan: {self.wing_span}m, powered by muscle)"
+
+
+class Airplane(Flyable):
+    def __init__(self, model, max_altitude):
+        self.model = model
+        self.max_altitude = max_altitude
+
+    def fly(self):
+        print(f"{self.model} engines roar as it accelerates down the runway.")
+
+    def get_flight_info(self):
+        return f"{self.model} (max altitude: {self.max_altitude}ft, powered by jet engines)"
+
+```
+- The Flyable scenario from the class diagram. Completely unrelated classes, Bird, Airplane,
+Each has different internal state and different behavior, but they all fulfill the same contract.
+
+# Design Principles
+## DRY
 - 
