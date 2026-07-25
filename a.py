@@ -1,48 +1,34 @@
-class FoodOrder:
-    def __init__(self, order_id: str, customer_name: str):
-        self._order_id = order_id
-        self._customer_name = customer_name
-        self._items: list[str] = []
-        self._total_amount = 0.0
-        self._is_placed = False
+class Notification:
+    def __init__(self, recipient: str, message: str):
+        self._recipient = recipient
+        self._message = message
 
-    # Only allows adding items before the order is placed
-    def add_item(self, name: str, price: float) -> None:
-        if self._is_placed:
-            print("Cannot modify a placed order.")
-            return
-        self._items.append(name)
-        self._total_amount += price
+    def send(self):
+        print(f"Sending generic notification to {self._recipient}")
 
-    # Places the order if it has at least one item and hasn't been placed yet
-    def place_order(self) -> bool:
-        if self._is_placed or not self._items:
-            return False
-        self._is_placed = True
-        return True
 
-    def get_item_count(self) -> int:
-        return len(self._items)
+class EmailNotification(Notification):
+    def __init__(self, recipient: str, message: str, subject: str):
+        super().__init__(recipient, message)
+        self._subject = subject
 
-    def display_order(self) -> None:
-        status = "PLACED" if self._is_placed else "PENDING"
-        print(f"Order {self._order_id} ({self._customer_name}) - {status}")
-        for item in self._items:
-            print(f"  - {item}")
-        print(f"  Total: ${self._total_amount:.2f}")
+    def send(self):
+        print(f"Sending EMAIL to {self._recipient} | Subject: {self._subject}")
 
+
+class SMSNotification(Notification):
+    def __init__(self, recipient: str, message: str, phone_number: str):
+        super().__init__(recipient, message)
+        self._phone_number = phone_number
+
+    def send(self):
+        print(f"Sending SMS to {self._phone_number} | Message: {self._message}")
 
 if __name__ == "__main__":
-    order1 = FoodOrder("ORD-101", "Alice")
-    order1.add_item("Pizza", 12.99)
-    order1.add_item("Garlic Bread", 4.99)
-    order1.add_item("Coke", 2.49)
-    order1.place_order()
+    notifications = [
+        EmailNotification("alice@example.com", "Your order shipped!", "Order Update"),
+        SMSNotification("Bob", "Code: 482910", "+1-555-0123"),
+    ]
 
-    order2 = FoodOrder("ORD-102", "Bob")
-    order2.add_item("Burger", 9.99)
-    order2.add_item("Fries", 3.99)
-
-    order1.display_order()
-    print()
-    order2.display_order()
+    for n in notifications:
+        n.send()
