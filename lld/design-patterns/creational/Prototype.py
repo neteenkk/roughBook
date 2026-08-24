@@ -1,100 +1,61 @@
+# For every mutable reference field, create a separate copy when deep cloning.
+# In Java, immutable means: once the object is created, its internal state cannot be changed.
+# eg: String, Integer, Float, Long, Double, Boolean
+# eg of Mutable : ArrayList, LinkedList, HashMap, HashSet, StringBuilder
+
 from abc import ABC, abstractmethod
-import platform
 
-class Button(ABC):
+class EnemyRegister(ABC):
     @abstractmethod
-    def paint(self):
+    def clone(self):
         pass
 
-    @abstractmethod
-    def on_click(self):
-        pass
+class Enemy(EnemyRegister):
+    def __init__(self, type, health, speed, armored, weapon, inventory):
+        self.type = type
+        self.health = health
+        self.speed = speed
+        self.armored = armored
+        self.weapon = weapon
+        self.inventory = list(inventory)
 
+    def clone(self):
+        return Enemy(self.type, self.health, self.speed, self.armored, self.weapon, self.inventory)
 
-class CheckBox(ABC):
-    @abstractmethod
-    def paint(self):
-        pass
+    def add_item(self, item):
+        self.inventory.append(item)
 
-    @abstractmethod
-    def on_click(self):
-        pass
+    def set_health(self, health):
+        self.health = health
 
-class WindowsButton(Button):
-    def paint(self):
-        print("Printing a windows style button")
+    def print_stats(self):
+        print(f"{self.type} | [Health: {self.health}, Speed: {self.speed}, Armored: {self.armored}, Weapon: {self.weapon}, Inventory: {self.inventory}]")
 
-    def on_click(self):
-        print("Windows button clicked")
+class EnemyRegistry:
+    def __init__(self):
+        self._prototypes = {}
 
-class WindowsCheckbox(CheckBox):
-    def paint(self):
-        print("Paintaing a windows-styled checkbox")
+    def register(self, key, protoype):
+        self._prototypes[key] = protoype
 
-    def on_click(self):
-        print("Windows Checkbox styled")
-
-
-class MacOSButton(Button):
-    def paint(self):
-        print("Painting a macOS-style button")
-
-    def on_click(self):
-        print("MacOS Button selected")
-
-
-class MacOSCheckbox(CheckBox):
-    def paint(self):
-        print("painting a macOS-styled checkbox")
-
-    def on_click(self):
-        print("macOS Checkbox selected")
-
-# abstractFactory
-
-class GUIFactory(ABC):
-    @abstractmethod
-    def create_button(self):
-        pass
-
-    @abstractmethod
-    def create_checkbox(self):
-        pass
-
-class WindowsFactory(GUIFactory):
-    def create_button(self):
-        return WindowsButton()
-
-    def create_checkbox(self):
-        return WindowsCheckbox()
-
-class MacOSFactory(GUIFactory):
-    def create_button(self):
-        return MacOSButton()
-
-    def create_checkbox(self):
-        return MacOSCheckbox()
-
-class Application:
-    def __init__(self, factory):
-        self.button = factory.create_button()
-        self.checkbox = factory.create_checkbox()
-
-    def render_ui(self):
-        self.button.paint()
-        self.checkbox.paint()
-
-def main():
-    os = platform.system()
-    print(os)
-    if "Windows" in os:
-        factory = WindowsFactory()
-    else:
-        factory = MacOSFactory()
-
-    app = Application(factory)
-    app.render_ui()
+    def get(self, key):
+        prototype = self._prototypes.get(key)
+        if prototype is None:
+            raise ValueError(f"No protoype registered for {key}")
+        return prototype.clone()
 
 
 if __name__ == "__main__":
-    main()
+    registry = EnemyRegistry()
+    registry.register("flying", Enemy("FlyingEnemy", 100, 12.0, False, "Laser", ["Speed Boost"]))
+    registry.register("armored", Enemy("ArmoredEnermy", 100, 46.0, True, "Canon", ["Shiled,  Helmet"]))
+
+    e1 = registry.get("flying")
+    e2 = registry.get("flying")
+    e2.set_health(10)
+    e2.add_item("Bomb")
+
+    e3 = registry.get("armored")
+    e1.print_stats()
+    e2.print_stats()
+    e3.print_stats()
