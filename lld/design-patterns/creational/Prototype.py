@@ -20,7 +20,7 @@ class Enemy(EnemyRegister):
         self.inventory = list(inventory)
 
     def clone(self):
-        return Enemy(self.type, self.health, self.speed, self.armored, self.weapon, self.inventory)
+        return Enemy(self.type, self.health, self.speed, self.armored, self.weapon, list(self.inventory))
 
     def add_item(self, item):
         self.inventory.append(item)
