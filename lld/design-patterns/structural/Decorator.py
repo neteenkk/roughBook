@@ -1,5 +1,6 @@
-from abc import ABC, abstractmethod
+# Open/Closed Principle: New formatting options can be added without modifying existing classes
 
+from abc import ABC, abstractmethod
 
 class TextView(ABC):
     @abstractmethod
